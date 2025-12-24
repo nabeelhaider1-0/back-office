@@ -1,0 +1,85 @@
+/* Flights BAggae Fair Rules  */
+/* .flightDetailModalDialog {
+    position: absolute !important;
+    left: 2%;
+    top: 20%;
+} */
+.flightDetailsTabsContent {
+    margin-top: 2vh;
+    font-size: 1vh;
+}
+.flightDetailModalContent {
+    border-radius: 1vh !important;
+    /* width: 43vh !important; */
+}
+.baggageFlightFairRulesMain {
+    padding-bottom: 4vw;
+}
+.flightDetailModalHeader {
+    justify-content: end;
+}
+
+
+
+.flightDetailModalBody {
+    padding: 0vh 1.8vh !important;
+    padding-bottom: 1.5vh !important;
+}
+.baggageFlightFairRules {
+    border: 0.15vw solid #D7D7D7;
+    padding: 1vw;
+    margin-bottom: 1vw;
+    border-radius: 0.5vw;
+}
+
+.baggageFlightFairRulesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.baggageFlightFairRules h2 {
+    font-size: 1.04vw;
+    font-weight: 600;
+    line-height: 1.5vw;
+    letter-spacing: -0.02em;
+    text-align: left;
+    margin-bottom: 0;
+    color: #343434;
+    display: inline;
+}
+
+.rule-toggle-icon {
+    display: inline-block;
+    transition: all 0.4s ease-in-out;
+
+}
+
+.baggageFlightFairRulesContent a {
+    color: var(--primary-color);
+    font-size: 1vw;
+    font-weight: 500;
+    line-height: 1.4vw;
+    padding: 0.5vw 0vw;
+}
+
+.rule-toggle-icon i {
+    font-size: 1vw;
+    color: #E56E44;
+}
+
+
+.baggageFlightFairRules p {
+    margin-top: 0.5vw;
+    font-size: 0.82vw;
+    font-weight: 400;
+    line-height: 1.4vw;
+    text-align: left;
+    margin-bottom: 0;
+    color: #475467;
+}
+
+.baggageFlightFairRules p b {
+    font-size: 0.96vw;
+}

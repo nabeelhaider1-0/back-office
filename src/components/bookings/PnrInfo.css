@@ -1,0 +1,116 @@
+.booking-table th,
+.booking-table td {
+  padding: 14px;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+.accordion-header{
+    background-color: #FF5015;
+}
+.booking-table th {
+  font-weight: 600;
+  color: #2c3e50;
+  background-color: #f8f9fa;
+}
+
+.booking-table tr:hover {
+  background-color: #e9ecef;
+  transition: background-color 0.2s ease;
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.accordion-button {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #34495e;
+  padding: 1rem 1.5rem;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f1f3f5;
+  color: #2c3e50;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.bi-info-circle {
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.bi-info-circle:hover {
+  color: #495057;
+}
+
+.container {
+  max-width: 850px;
+}
+
+.badge {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.pnr-info-grid {
+  padding: 1rem;
+}
+
+.pnr-info-item {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.pnr-info-item:hover {
+  background-color: #e9ecef;
+}
+
+.pnr-label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.pnr-value {
+  font-size: 0.95rem;
+  color: #495057;
+}
+.pnr-passenger-table {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.pnr-passenger-table th,
+.pnr-passenger-table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-color: #e9ecef;
+}
+
+.pnr-passenger-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.pnr-passenger-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Ensure table is scrollable on small screens */
+@media (max-width: 768px) {
+  .pnr-passenger-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

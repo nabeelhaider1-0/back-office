@@ -1,0 +1,27 @@
+@media print {
+  .noprint {
+    display: none !important;
+  }
+  .siteLogo img {
+    display: block !important;
+    width: 100px;
+  }
+  .printe {
+    width: 100%;
+    clear: both;
+  }
+  .table-responsive {
+    overflow: visible !important;
+  }
+  .bookingTbl {
+    page-break-inside: auto;
+    border: 1px solid #000 !important;
+  }
+  .bookingTbl tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  body {
+    margin: 0;
+  }
+}

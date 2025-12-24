@@ -1,0 +1,1329 @@
+import { Link } from "react-router-dom";
+
+import React, { useState } from "react"; // Import React and useState
+import Flatpickr from "react-flatpickr";
+import Header2 from "../../header2/header2";
+import Constants from "../../../constants/routes";
+import MultiSelect from "../../reactMultiSelect";
+import { countries } from "../../../constants/Country-City-Data";
+
+const consumedOptions = [
+  { value: "", label: "Select" },
+  { value: "IB", label: "Inbound" },
+  { value: "OB", label: "Outbound" },
+];
+
+const supplierStatusOptions = [
+  { value: "", label: "Select" },
+  { value: 1, label: "Registered" },
+  { value: 3, label: "Unregistered" },
+  { value: 2, label: "International" },
+];
+
+const serviceOptions = [
+  { label: "Hotel", value: 1 },
+  { label: "Transfer", value: 3 },
+  { label: "Misc", value: 4 },
+  { label: "Airline", value: 5 },
+  { label: "Packages", value: 6 },
+  { label: "Groups", value: 7 },
+  { label: "Visa", value: 8 },
+  { label: "Offline", value: 9 },
+  { label: "Other", value: 10 },
+  { label: "Tickets", value: 11 },
+  { label: "Activities", value: 17 },
+  { label: "Transportation", value: 18 },
+  { label: "Tour", value: 19 },
+  { label: "Food", value: 20 },
+  { label: "Flight Ticket", value: 22 },
+  { label: "Golf", value: 23 },
+  { label: "Insurance Premium Tax", value: 24 },
+];
+
+const MastersTaxConfigurationSearch = () => {
+  const [startDate, setStartDate] = useState(null); // State for the start date
+  const [endDate, setEndDate] = useState(null); // State for the end date
+
+  const handleTrashClick = () => {
+    // Function to clear both start and end dates
+    setStartDate(null);
+    setEndDate(null);
+  };
+  return (
+    <>
+      <Header2
+        title="SEARCH TAX CONFIGURATION"
+        linkText1="Search Tax Configuration "
+        linkText2="Add Tax Configuration "
+        link2={Constants.URLConstants.MASTERSTAXCONFIGURATIONADD}
+      />
+      <div class="container-fluid pt-0 p-4" id="content-pad">
+        <div>
+          <form>
+            <div className="row">
+              <div className="col-md-3">
+                <div className="form-group">
+                  <label>Country :</label>
+                  <MultiSelect
+                    options={countries}
+                    isSearchable
+                    placeholder="- Select Country-"
+                    noOptionsMessage={() => "No Country Found"}
+                    className="custom-select"
+                  />
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="form-group">
+                  <label>Service Consumed :</label>
+                  <MultiSelect
+                    options={consumedOptions}
+                    isSearchable
+                    placeholder="- Select Service-"
+                    noOptionsMessage={() => "No Service Found"}
+                    className="custom-select"
+                  />
+                </div>
+              </div>
+            </div>
+            <style
+              dangerouslySetInnerHTML={{
+                __html: "\n#validfrom{\npadding-right:85px !important\n}\n",
+              }}
+            />
+            {/* 2nd Row */}
+            <div className="row mt-3">
+              <div className="col-md-4 form-group">
+                <label>Date :</label>
+                <div className="input-group date input-daterange" id="date">
+                  <span className="input-group-addon" id="validfrom">
+                    Valid&nbsp;From
+                  </span>
+                  <Flatpickr
+                    value={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    options={{ dateFormat: "Y-m-d" }}
+                  />
+
+                  <span class="input-group-addon">to</span>
+                  <Flatpickr
+                    value={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    options={{ dateFormat: "Y-m-d" }}
+                  />
+                  <span
+                    className="input-group-addon"
+                    id="tcTrashBtn"
+                    onClick={handleTrashClick}
+                  >
+                    <i className="fa fa-trash" />
+                  </span>
+                </div>
+              </div>
+              <div className="form-group col-md-3">
+                <label>Supplier Status :</label>
+                <MultiSelect
+                  options={supplierStatusOptions}
+                  isSearchable
+                  placeholder="- Select Supplier-"
+                  noOptionsMessage={() => "No Supplier Found"}
+                  className="custom-select"
+                />
+              </div>
+            </div>
+            {/* Row */}
+            <div className="row">
+              <input type="hidden" name="supplier_country" defaultValue={0} />{" "}
+              {/* Temp */}
+              <input
+                type="hidden"
+                name="supplier_type"
+                defaultValue="external"
+              />{" "}
+              {/* Temp */}
+            </div>
+            {/* 3rd Row */}
+            <div className="row mt-3">
+              <div className="form-group col-md-3">
+                <label>Services :</label>
+                <MultiSelect
+                  options={serviceOptions}
+                  isSearchable
+                  placeholder="- Select Services-"
+                  noOptionsMessage={() => "No Services Found"}
+                  className="custom-select"
+                />
+              </div>
+            </div>
+            {/* 4th Row */}
+            <div className="row mt-3 mb-4">
+              <div className="form-group col-md-12">
+                <input
+                  type="hidden"
+                  name="action"
+                  defaultValue="tax_config_add_controller"
+                />
+                <button
+                  type="submit"
+                  className="btn btn-dark btn-sm"
+                  value="Submit"
+                  id="submit_button"
+                >
+                  <i className="fa fa-save" />
+                  &nbsp;Search
+                </button>
+              </div>
+            </div>
+          </form>
+          <br />
+          <form>
+            {/* 5th Row */}
+            <div className="row">
+              <div className="col-md-1 form-group" />
+              <div className="col-md-2 form-group" />
+              <div className="col-md-7 form-group">
+                {/*Pagination panel*/}
+                <nav aria-label="Page navigation example">
+                  <ul className="pagination pagination-sm justify-content-center mt-4">
+                    <li className="page-item">
+                      <Link className="page-link" to="#" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                      </Link>
+                    </li>
+                    <li className="page-item active">
+                      <Link className="page-link" to="#">
+                        1
+                      </Link>
+                    </li>
+                    <li className="page-item">
+                      <Link className="page-link" to="#">
+                        2
+                      </Link>
+                    </li>
+                    <li className="page-item">
+                      <Link className="page-link" to="#" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div className="col-md-2 form-group mt-3">
+                <style
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "\n                        .table tr[visible='false'],\n                        .no-result {\n                            display: none;\n                            border: 1px solid #ddd;\n                            padding: 10px;\n                            margin-top: -2px;\n                        }\n    \n                        .table tr[visible='true'] {\n                            display: table-row;\n                        }\n    \n                        .counter {\n                            padding: 8px;\n                            color: #ccc;\n                        }\n    \n                        .search_new {\n                            float: right;\n                            height: 35px;\n                            margin-bottom: 0px;\n                            padding-left: 5px;\n                        }\n                    ",
+                  }}
+                />
+                <style
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "\ntable thead tr td {\n  color: white !important;\n}\n",
+                  }}
+                />
+                <div
+                  className="form-group col-md-2 new_search_icon"
+                  style={{ textAlign: "right", paddingRight: "0px" }}
+                >
+                  <h5 style={{ display: "inline" }}>
+                    <i
+                      className="fa fa-search srchWithinPg"
+                      id="magnifiers"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-original-title="Search within this table"
+                    />
+                  </h5>
+                </div>
+                <div className="form-group col-md-10 bookingsrc">
+                  <input
+                    type="text"
+                    className="tablesearch form-control form-control-sm search_new"
+                    placeholder="Search"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* 6th Row */}
+            <div className="row mt-2">
+              <div className="col-sm-12">
+                <div
+                  className="doubleScroll-scroll-wrapper"
+                  id="wrapper1"
+                  style={{
+                    height: "20px",
+                    overflow: "scroll hidden",
+                    width: "1320px",
+                  }}
+                >
+                  <div
+                    className="suwala-doubleScroll-scroll"
+                    style={{ height: "20px", width: "1320px" }}
+                  />
+                </div>
+                <div
+                  id="wrapper2"
+                  style={{
+                    overflowX: "scroll",
+                    display: "block",
+                    overflowY: "hidden",
+                  }}
+                >
+                  <table
+                    id="tax-table"
+                    className="table   table-responsive table-bordered  dataTable no-footer"
+                    role="grid"
+                    aria-describedby="tax-table_info"
+                  >
+                    <thead style={{ textTransform: "uppercase" }}>
+                      <tr role="row">
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "167px" }}
+                        >
+                          Country
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "44px" }}
+                        >
+                          Branch
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "148px" }}
+                        >
+                          Location
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "78px" }}
+                        >
+                          Service
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "111px" }}
+                        >
+                          Suppler Status
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "59px" }}
+                        >
+                          From Date
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "43px" }}
+                        >
+                          To Date
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "123px" }}
+                        >
+                          Service consumption
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "85px" }}
+                        >
+                          Input Tax Code
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "43px" }}
+                        >
+                          Input %
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "99px" }}
+                        >
+                          Output Tax Code
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "53px" }}
+                        >
+                          Output %
+                        </td>
+                        <td
+                          className="sorting_disabled"
+                          rowSpan={1}
+                          colSpan={1}
+                          style={{ width: "101px" }}
+                        >
+                          Action
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      <tr role="row" className="odd">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title="Mumbai,New delhi(Delhi),Bangalore (Bengaluru)"
+                          >
+                            Mumbai,New delh....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">01</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=3"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="even">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=4"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="odd">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=5"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="even">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=6"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="odd">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=7"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="even">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=8"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="odd">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Transfer</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=9"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="even">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Hotel</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=10"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="odd">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Hotel</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=11"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row" className="even">
+                        <td>
+                          <label>India</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title
+                            data-original-title
+                          >
+                            ....
+                          </label>
+                        </td>
+                        <td>
+                          <label>Hotel</label>
+                        </td>
+                        {/* <td>
+                  <label></label>
+                  </td> */}
+                        <td>
+                          <label>Registered</label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">12</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>
+                            <div className="dateWrapper">
+                              <div className="onlyDate">30</div>
+                              <div className="monthYear">
+                                Jun
+                                <br />
+                                2019
+                              </div>
+                            </div>
+                          </label>
+                        </td>
+                        <td>
+                          <label>INBOUND</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td>
+                          <label />
+                        </td>
+                        <td>
+                          <label>0</label>
+                        </td>
+                        <td className="actionlink">
+                          <div className="actionCont">
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Edit"
+                                data-placement="top"
+                                to={
+                                  Constants.URLConstants
+                                    .MASTERSTAXCONFIGURATIONEDIT
+                                }
+                              >
+                                <i className="fa fa-pencil-square-o" />
+                              </Link>
+                            </div>
+                            <div className="input-group-addon">
+                              <Link
+                                data-toggle="tooltip"
+                                data-original-title="Delete"
+                                data-placement="top"
+                                to="tax.php?action=delete_tax_config&id=12"
+                              >
+                                <i className="fa fa-trash" />
+                              </Link>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            {/* End */}
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+export default MastersTaxConfigurationSearch;
